@@ -1,155 +1,187 @@
+# Events Tracker
 
-# tg-mini-app 🚀
+Events Tracker — это монорепозиторий на TypeScript, содержащий два React-приложения, использующих один и тот же бэкенд для управления событиями:
 
-## ✨ Features
+- `admin` административная панель для управления пользователями и событиями;
+- `web` пользовательское мини-приложение для просмотра событий, управления профилем и подписки на события.
 
-*   **Dynamic Event Management**: Browse, view, and interact with various events.
-*   **User Accounts**: Manage user profiles and related information.
-*   **Responsive Design**: Optimized for a seamless experience across different devices.
-*   **Efficient Data Fetching**: Utilizes React Query for robust caching and background updates.
-*   **State Management**: Employs MobX for predictable and observable state management.
-*   **Styling**: Leverages Emotion for powerful CSS-in-JS styling capabilities.
-*   **Routing**: Implements client-side routing for smooth navigation with `react-router-dom`.
-*   **Code Quality**: Enforces code consistency with ESLint and TypeScript.
+Репозиторий управляется с помощью рабочих пространств pnpm и Turborepo. Общие HTTP-запросы и доменные типы находятся в пакетах рабочего пространства, а не дублируются в каждом приложении.
 
-## 🛠️ Tech Stack
+## Requirements
 
-*   **Frontend Framework**: React
-*   **Language**: TypeScript, JavaScript
-*   **Build Tool**: Vite
-*   **State Management**: MobX, MobX React Lite
-*   **Data Fetching & Caching**: React Query (`@tanstack/react-query`)
-*   **Styling**: Emotion (`@emotion/react`, `@emotion/styled`)
-*   **HTTP Client**: Axios
-*   **Routing**: React Router DOM (`react-router-dom`)
-*   **Linting**: ESLint
-*   **Development Server**: Vite plugins (`@vitejs/plugin-react-swc`, `@vitejs/plugin-basic-ssl`)
-*   **Deployment**: gh-pages
+- Node.js 20 или новее;
+- pnpm `10.18.3` (версия, указанная в корневом `package.json`).
 
-## 🚀 Installation
+Установите pnpm, если он недоступен:
 
-To get started with the-point-of-growth, follow these steps:
-
-1.  **Clone the repository**:
-    ```bash
-    git clone https://github.com/your-username/the-point-of-growth.git
-    cd the-point-of-growth
-    ```
-
-2.  **Install dependencies**:
-    This project uses both `npm` and `pnpm`. It's recommended to use `pnpm` for faster and more efficient dependency management.
-
-    **Using pnpm (Recommended)**:
-    ```bash
-    pnpm install
-    ```
-
-    **Using npm**:
-    ```bash
-    npm install
-    ```
-    *Note: If `pnpm` is not installed, you can install it globally via `npm install -g pnpm`.*
-
-## 💡 Usage
-
-Once dependencies are installed, you can run the development server:
-
-1.  **Start the development server**:
-    ```bash
-    pnpm dev
-    # or
-    npm run dev
-    ```
-
-    This will start the Vite development server. The application will be accessible at `http://localhost:5173` (or the port specified by Vite) with hot module replacement enabled.
-
-    The `vite.config.ts` file includes a proxy configuration for development:
-    ```javascript
-    server: {
-      proxy: {
-        "/api": {
-          target: "http://62c8d468f852.vps.myjino.ru:49196",
-          changeOrigin: true,
-          secure: false,
-        },
-      },
-    },
-    ```
-    This means requests starting with `/api` will be proxied to the specified backend server during development.
-
-2.  **Build for production**:
-    To create an optimized build of the application for deployment:
-    ```bash
-    pnpm build
-    # or
-    npm run build
-    ```
-    This command will generate the static assets in the `dist` directory.
-
-3.  **Deploy to GitHub Pages**:
-    The project is configured to deploy to GitHub Pages using `gh-pages`.
-    ```bash
-    pnpm deploy
-    # or
-    npm run deploy
-    ```
-
-## 📂 Project Structure
-
-The project follows a structured directory layout:
-
+```bash
+npm install --global pnpm@10.18.3
 ```
+
+## Начало работы
+
+Из корня репозитория:
+
+```bash
+pnpm install
+pnpm dev
+```
+
+`pnpm dev` запускает оба приложения Vite через Turborepo. Каждое приложение выводит свой фактический локальный URL. По умолчанию Vite использует порт `5173` если порт занят, он выбирает следующий доступный порт.
+
+Чтобы запустить только одно приложение:
+
+```bash
+pnpm --filter admin dev
+pnpm --filter web dev
+```
+
+Серверы разработки проксируют запросы `/api` на бэкенд, настроенный в файлах `vite.config.ts` приложений.
+
+## Структура репозитория
+
+```text
 .
-├── public/             # Static assets (e.g., favicon, images)
-│   └── vite.svg
-├── src/                # Application source code
-│   ├── axios/          # Axios configurations and request logic
-│   ├── components/     # Reusable UI components
-│   ├── hooks/          # Custom React hooks
-│   ├── icon/           # SVG icon components
-│   ├── img/            # Image assets
-│   ├── index.css       # Global CSS styles
-│   ├── main.tsx        # Application entry point
-│   ├── pages/          # Page-level components
-│   ├── providers/      # React context providers
-│   ├── router/         # Application routing configuration
-│   ├── store/          # MobX stores
-│   ├── styles/         # Shared styling utilities or themes
-│   ├── types/          # TypeScript type definitions
-│   ├── utils/          # Utility functions
-│   └── App.tsx         # Root React component
-├── eslint.config.js    # ESLint configuration
-├── index.html          # Main HTML entry file
-├── package-lock.json   # npm dependency lock file
-├── package.json        # Project metadata and dependencies
-├── tsconfig.app.json   # TypeScript configuration for the application
-├── tsconfig.json       # Base TypeScript configuration
-├── tsconfig.node.json  # TypeScript configuration for Node.js environment
-├── vercel.json         # Vercel deployment configuration (if applicable)
-└── vite.config.ts      # Vite build tool configuration
+├── apps/
+│   ├── admin/             Административное React-приложение
+│   └── web/               Пользовательское React-мини-приложение
+├── packages/
+│   ├── api/               Общий клиент Axios и операции API
+│   └── types/             Общие доменные контракты TypeScript
+├── package.json           Скрипты рабочего пространства и зависимость Turborepo
+├── pnpm-workspace.yaml    Глобы пакетов рабочего пространства
+├── pnpm-lock.yaml         Зафиксированный граф зависимостей
+└── turbo.json             Зависимости задач и настройки кэша
 ```
 
-## ⚙️ Configuration
+`apps/*` содержит UI, маршрутизацию, хранилища, хуки и логику представления, специфичные для продукта. Код относится к `packages/*` когда он является стабильным контрактом или поведением, общим для обоих приложений.
 
-### Environment Variables
+## Пакеты рабочего пространства
 
-This project may utilize environment variables for configuration. Ensure you have a `.env` file in the root of your project if needed, or consult specific deployment platform documentation for setting environment variables.
+### `@repo/types`
 
-The `vite.config.ts` demonstrates setting up a proxy for API requests during development, which is a common configuration aspect.
+`packages/types` это единственный источник правды для общих контрактов TypeScript. Он содержит DTO пользователей и событий, модели представления, формы, перечисления, константы и общие типы, связанные с API.
 
-## 🤝 Contributing
+Приложения должны импортировать общие контракты из точки входа пакета:
 
-We welcome contributions to the-point-of-growth! If you'd like to contribute, please follow these guidelines:
+```ts
+import type { EventItem, UserDto } from "@repo/types";
+```
 
-1.  **Fork the repository.**
-2.  **Create a new branch** for your feature or bug fix.
-3.  **Make your changes** and ensure they adhere to the project's coding standards (enforced by ESLint).
-4.  **Write tests** for your changes if applicable.
-5.  **Commit your changes** with clear and descriptive messages.
-6.  **Submit a Pull Request.**
+Не воссоздавайте эти интерфейсы внутри приложения. Типы-адаптеры, специфичные для приложения, уместны, когда они описывают преобразование для конкретного представления; форма, обращённая к бэкенду, должна оставаться в `@repo/types`.
 
-Please ensure your code is well-formatted and passes all linting checks.
+### `@repo/api`
 
-## 📜 License
+`packages/api` отвечает за все фронтенд-запросы к бэкенду. Он предоставляет:
 
-This project is licensed under the [MIT License](LICENSE).
+- один клиент Axios, настроенный с `/api` в качестве базового URL и включёнными учётными данными;
+- разворачивание ответов для оболочки бэкенда `{ success, data, message }`;
+- операции аутентификации и управления аккаунтом;
+- операции администрирования пользователей;
+- операции с событиями и изображениями событий;
+- операции подписки на уведомления;
+- централизованные пути эндпоинтов.
+
+Потребители используют сгруппированный фасад `API`:
+
+```ts
+import { API } from "@repo/api";
+
+const events = await API.events.getEvents();
+const user = await API.auth.getCurrentUser();
+```
+
+Пакет также экспортирует `apiClient`, `endpoints`, и типы ответов API для случаев, когда необходима интеграция более низкого уровня. Новые функции запросов следует добавлять `packages/api`, а затем предоставлять через `API`; приложения не должны создавать локальные клиенты Axios или дублировать строки эндпоинтов.
+
+## Обязанности приложений
+
+### Админ-панель
+
+Приложение админ-панели обрабатывает аутентифицированные административные рабочие процессы: список и редактирование пользователей, регистрация и удаление, создание и редактирование событий, удаление событий и управление изображениями событий. Его хуки состояния и запросов специфичны для приложения, в то время как запросы и доменные контракты берутся из общих пакетов.
+
+### Веб-мини-приложение
+
+Веб-приложение отвечает за пользовательский опыт: аутентификация, поиск событий, детали событий, личные события, редактирование профиля, управление аватаром, подписки на события и подписки на уведомления. Оно также содержит интеграцию с Telegram WebApp, используемую средой выполнения мини-приложения.
+
+Два приложения могут использовать разные UI-библиотеки и версии маршрутизации. Это сделано намеренно: общие пакеты содержат доменное поведение и контракты, а не визуальные компоненты, специфичные для приложения.
+
+## Бэкенд и прокси для разработки
+
+Обе конфигурации Vite проксируют запросы, начинающиеся с `/api`, на один и тот же хост бэкенда. Поэтому общий клиент API использует относительные URL и работает в обоих приложениях, не зная имени хоста бэкенда.
+
+Текущая конфигурация прокси для разработки и Vercel указывает на:
+
+```text
+http://62c8d468f852.vps.myjino.ru:49196
+```
+
+При изменении бэкенда обновите цель прокси в обоих файлах `apps/admin/vite.config.ts` и `apps/web/vite.config.ts`. Перезаписи Vercel в `apps/admin/vercel.json` и `apps/web/vercel.json` должны оставаться согласованными с этой целью, чтобы развёрнутые запросы работали.
+
+Клиент API отправляет учётные данные с запросами. Это необходимо для потока аутентификации на основе cookie, и это означает, что бэкенд должен разрешать запросы с учётными данными от развёрнутых источников фронтенда.
+
+## Команды
+
+Запускайте команды из корня репозитория, если не указано иное.
+
+```bash
+# Установить все зависимости рабочего пространства
+pnpm install
+
+# Запустить admin и web в режиме наблюдения
+pnpm dev
+
+# Собрать каждый пакет/приложение в порядке зависимостей
+pnpm build
+
+# Запустить линтер в каждом рабочем пространстве, где определён скрипт lint
+pnpm lint
+
+# Запустить команду в одном рабочем пространстве
+pnpm --filter admin build
+pnpm --filter web build
+pnpm --filter admin lint
+```
+
+Корневая задача `build` координируется Turborepo. Её граф зависимостей гарантирует, что сборки пакетов, если они есть, доступны до сборки зависимых приложений. Задачи разработки являются постоянными и намеренно исключены из кэша.
+
+## Процесс разработки
+
+1. Устанавливайте зависимости с помощью `pnpm install` после изменения зависимостей рабочего пространства.
+2. Запускайте нужное приложение(я) с помощью `pnpm dev` или отфильтрованной команды.
+3. Размещайте общие типы в `packages/types`, а общие запросы в `packages/api`.
+4. Держите состояние UI, маршрутизацию и задачи представления внутри соответствующего приложения.
+5. Перед коммитом запускайте соответствующие проверки TypeScript/сборки:
+
+   ```bash
+   pnpm --filter admin build
+   pnpm --filter web build
+   ```
+
+6. Сохраняйте `pnpm-lock.yaml` в том же изменении, когда меняется зависимость пакета.
+
+При добавлении новой операции API определите её путь в `packages/api/src/endpoints.ts`, реализуйте её в соответствующем модуле API, экспортируйте из `packages/api/src/index.ts`, и используйте через `API` в хуке или компоненте приложения. Это изолирует детали транспорта от слоя UI и предотвращает расхождение двух приложений.
+
+## Продакшен-сборки и развёртывание
+
+Каждое приложение создаёт сборку Vite в своей собственной директории `dist/`:
+
+```bash
+pnpm --filter admin build
+pnpm --filter web build
+```
+
+Веб-приложение включает скрипт `deploy` для публикации своей директории `dist/` с помощью `gh-pages`:
+
+```bash
+pnpm --filter web deploy
+```
+
+Приложения также содержат конфигурацию перезаписи Vercel для перенаправления запросов `/api/*` на бэкенд. Сборка фронтенда не включает бэкенд; во время выполнения требуется доступный бэкенд и правильно настроенные CORS/cookies.
+
+## Соглашения
+
+- Используйте псевдонимы рабочего пространства (`@repo/types`, `@repo/api`) вместо относительных импортов через границы пакетов.
+- Держите пути эндпоинтов бэкенда и поведение Axios централизованными в `@repo/api`.
+- Предпочитайте импорт только типов для контрактов: `import type { ... } from "@repo/types"`.
+- Избегайте копирования DTO, типов форм или реализаций запросов между `apps/admin` и `apps/web`.
+- Ограничивайте изменения соответствующим приложением, если поведение не является действительно общим.
