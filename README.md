@@ -1,11 +1,27 @@
 # Events Tracker
 
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
+![Turborepo](https://img.shields.io/badge/Turborepo-EF4444?logo=turborepo&logoColor=white)
+![pnpm](https://img.shields.io/badge/pnpm-F69220?logo=pnpm&logoColor=white)
+
 Events Tracker — это монорепозиторий на TypeScript, содержащий два React-приложения, использующих один и тот же бэкенд для управления событиями:
 
 - `admin` административная панель для управления пользователями и событиями;
 - `web` пользовательское мини-приложение для просмотра событий, управления профилем и подписки на события.
 
 Репозиторий управляется с помощью рабочих пространств pnpm и Turborepo. Общие HTTP-запросы и доменные типы находятся в пакетах рабочего пространства, а не дублируются в каждом приложении.
+
+## 🔗 Live Demo
+
+| Приложение | Ссылка |  |
+|---|---|---|
+| 🌐 Web | https://event-tracker-web-mu.vercel.app/ | Интерфейс для студентов |
+| 🛠 Admin | https://event-tracker-admin.vercel.app/ | Панель для менеджеров |
+
+**Тестовый аккаунт студента:**  
+login: `ivan@mail.ru` / password: `123`  
 
 ## Requirements
 
