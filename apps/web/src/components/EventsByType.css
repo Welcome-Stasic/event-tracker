@@ -123,9 +123,11 @@
 /* Сетка событий */
 .events-grid {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  column-gap: 20px;
   position: relative;
   z-index: 10;
+  justify-content: center;
   margin-top: -35px;
   padding: 40px 16px;
   row-gap: 20px;

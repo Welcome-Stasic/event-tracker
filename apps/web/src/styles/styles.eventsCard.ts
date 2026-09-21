@@ -21,7 +21,6 @@ export const EventCardContainer = styled.div`
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  margin: auto;
   transition: box-shadow 0.2s;
   position: relative;
   isolation: isolate;
