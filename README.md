@@ -21,7 +21,7 @@ Events Tracker — это монорепозиторий на TypeScript, сод
 | 🛠 Admin | https://event-tracker-admin.vercel.app/ | Панель для менеджеров |
 
 **Тестовый аккаунт студента:**  
-login: `ivan@mail.ru` / password: `123`  
+login: `ivan@mail.ru` / password: `123123`  
 
 ## Requirements
 
