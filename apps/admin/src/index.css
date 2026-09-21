@@ -1,0 +1,10 @@
+:root {
+  --font-family: "Roboto", sans-serif;
+  --second-family: "Inter", sans-serif;
+  --font4: "Roboto Mono", sans-serif;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}

@@ -1,0 +1,47 @@
+:root {
+  --bg-color: #fbfbfb;
+  --text-color: #000000;
+  --card-bg-color: #ffffff;
+  --description-color: #707579;
+  --tabs-myEvent-color: #f0f0f0;
+  --tabs-active-myEvent-color: white;
+}
+
+[data-theme="dark"] {
+  --bg-color: #212121;
+  --text-color: #ffffff;
+  --card-bg-color: #323232;
+  --description-color: #aaaaaa;
+  --tabs-myEvent-color: #2a2a2a;
+  --tabs-active-myEvent-color: #2f2f2f;
+}
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.html,
+body,
+#root,
+html,
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  border-top: 2px solid #eee;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10;
+}
