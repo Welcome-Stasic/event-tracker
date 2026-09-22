@@ -6,12 +6,9 @@ import "./EventsByType.css";
 import "./MyEvents.css";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../store/storeProvider";
-import { useMyEvents } from "../hooks/events/useMyEvents.ts";
-import { Loader } from "./loader";
 
 export const MyEvents = memo(observer(() => {
   const { myEventsStore } = useStore();
-  const { isLoading } = useMyEvents();
 
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"current" | "past">("current");
@@ -95,7 +92,6 @@ export const MyEvents = memo(observer(() => {
 
   const displayEvents = activeTab === "current" ? currentEvents : pastEvents;
   // const displayEvents = myEventsStore.myEvents;
-  if (isLoading) return <Loader />;
   if (myEventsStore.myEvents.length === 0) {
     return (
       <div className="my-events-container">

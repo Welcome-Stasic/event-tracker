@@ -10,7 +10,6 @@ import AllEvents from "../components/events/AllEvents";
 import { FormEventPage } from "../components/events/eventForm/FormEventPage";
 import { FormPreviewPage } from "../components/events/previewEvent/FormPreviewPage";
 
-// eslint-disable-next-line react-refresh/only-export-components
 const NotFoundRedirect = () => {
   const { managerStore } = useStore();
   const { isLoading } = useUser();
@@ -43,13 +42,10 @@ const NotFoundRedirect = () => {
   return <Loader />;
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 const ProtectedRoute = () => {
   const { managerStore } = useStore();
-  const { isLoading } = useUser();
   const isAuth: boolean = managerStore.isAuthenticated;
-  if (isLoading) return <Loader />;
-
+  
   if (!isAuth) {
     return <Navigate to="/login" replace />;
   }
